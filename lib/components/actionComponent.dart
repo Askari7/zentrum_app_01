@@ -62,68 +62,65 @@ void _toggleCollapse() {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Add_Remove_Worker(),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: _toggleExpandAll,
-                  child: Text(
-                    "Expand All",
-                    style: TextStyle(color: Colors.blue),
-                  ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Add_Remove_Worker(),
+      
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: _toggleExpandAll,
+                child: Text(
+                  "Expand All",
+                  style: TextStyle(color: Colors.blue),
                 ),
-                TextButton(
-                  onPressed: _toggleCollapse,
-                  child: Text(
-                    "Collapse All",
-                    style: TextStyle(color: Colors.blue),
-                  ),
+              ),
+              TextButton(
+                onPressed: _toggleCollapse,
+                child: Text(
+                  "Collapse All",
+                  style: TextStyle(color: Colors.blue),
                 ),
-              ],
-            ),
-            
-            Column(
-              children: List.generate(_expandedState.length, (index) {
-                return Card(
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            _removeWorker(index); // Remove the worker at the specific index
-                          },
-                        ),
-                        title: Text('Action ${index + 1}'),
-                        trailing: IconButton(
-                          icon: Icon(
-                            _expandedState[index]
-                                ? Icons.expand_less
-                                : Icons.expand_more,
-                          ),
-                          onPressed: () => _toggleCard(index),
-                        ),
+              ),
+            ],
+          ),
+          
+          Column(
+            children: List.generate(_expandedState.length, (index) {
+              return Card(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      leading: IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          _removeWorker(index); // Remove the worker at the specific index
+                        },
                       ),
-                      if(_expandedState[index])
-                      ActionInfo(),
-                      
-                    ],
-                  ),
-                );
-              }),
-            ),
-            
-          ],
-        ),
+                      title: Text('Action ${index + 1}'),
+                      trailing: IconButton(
+                        icon: Icon(
+                          _expandedState[index]
+                              ? Icons.expand_less
+                              : Icons.expand_more,
+                        ),
+                        onPressed: () => _toggleCard(index),
+                      ),
+                    ),
+                    if(_expandedState[index])
+                    ActionInfo(),
+                    
+                  ],
+                ),
+              );
+            }),
+          ),
+          
+        ],
       ),
     );
   }

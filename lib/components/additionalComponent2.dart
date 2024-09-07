@@ -18,6 +18,8 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
   bool isValeSelected = false;
   String? selectedRAC;
   String? witnessOption;
+    bool isContractorSelected = false; // New state variable for CONTRACTOR
+
 
   Map<String, String> answers = {};
 
@@ -69,7 +71,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: ElevatedButton(
                   onPressed: () async {
                     // Logic to select Vale
@@ -114,16 +116,20 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
                   child: Text(
                     selectedVale,
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: ElevatedButton(
-                  onPressed: () => {
-                    
+                  onPressed: () {
+                    setState(() {
+                      isValeSelected = true; // Reset VALE selection
+                      selectedVale = "CONTRACTOR";
+                      isContractorSelected = true; // Mark CONTRACTOR as selected
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -135,77 +141,111 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                   ),
                   child: Text(
                     "CONTRACTOR",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ),
               ),
             ],
           ),
-
-          // Conditional RAC Section (if Vale is selected)
-          if (isValeSelected) ...[
-            SizedBox(height: 16),
-            Text(
-              "Select the critical (RAC) associated with the event:",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
+          SizedBox(height: 16),
+        if (isContractorSelected) ...[
+          Text(
+            "Did the event involve a SUBCONTRACTOR/ACTIVITY?",
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.black,
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: options.map((option) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => updateAnswer("Did the event involve a SUBCONTRACTOR/ACTIVITY?", option),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      side: BorderSide(
+                        color: answers["Did the event involve a SUBCONTRACTOR/ACTIVITY?"] == option ? Colors.blue : Colors.grey[300]!,
+                        width: 2.0,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 48.0),
+                    ),
+                    child: Text(
+                      option,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          if (answers["Did the event involve a SUBCONTRACTOR/ACTIVITY?"] == 'Yes') ...[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                value: selectedRAC,
-                hint: Text("Select RAC"),
-                onChanged: (value) {
-                  setState(() {
-                    selectedRAC = value;
-                  });
-                },
-                items: ["RAC 1", "RAC 2", "RAC 3"].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+              child: Text(
+                "Select the SUBCONTRACTOR responsible for the LOCATION where the event happend",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add a TextField or another widget to collect the response for the additional question
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter activity details',
+                ),
               ),
             ),
           ],
-          if (isValeSelected && selectedVale =="CONTRACTOR") ...[
-            SizedBox(height: 16),
-            Text(
-              "Select the critical (RAC) associated with the event:",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                value: selectedRAC,
-                hint: Text("Select RAC"),
-                onChanged: (value) {
-                  setState(() {
-                    selectedRAC = value;
-                  });
-                },
-                items: ["RAC 1", "RAC 2", "RAC 3"].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
+        ],
+          
+          // if (isValeSelected && selectedVale =="CONTRACTOR") ...[
+          //   SizedBox(height: 16),
+          //   Text(
+          //     "Select the critical (RAC) associated with the event:",
+          //     style: TextStyle(
+          //       fontSize: 16.0,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          //   Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: DropdownButton<String>(
+          //       value: selectedRAC,
+          //       hint: Text("Select RAC"),
+          //       onChanged: (value) {
+          //         setState(() {
+          //           selectedRAC = value;
+          //         });
+          //       },
+          //       items: ["RAC 1", "RAC 2", "RAC 3"].map((String value) {
+          //         return DropdownMenuItem<String>(
+          //           value: value,
+          //           child: Text(value),
+          //         );
+          //       }).toList(),
+          //     ),
+          //   ),
+          // ],
 
           // Witness Question
           SizedBox(height: 16),
@@ -222,12 +262,12 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: witness.map((option) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(2.0),
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -252,7 +292,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
                           child: Text(
                             option,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 12.0,
                             ),
                           ),
                         ),

@@ -217,7 +217,7 @@ class _MaterialEventState extends State<MaterialEvent> {
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(8.0),
                                         ),
-                                        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 64.0),
+                                        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 62.0),
                                       ),
                                       child: Text(
                                         option,

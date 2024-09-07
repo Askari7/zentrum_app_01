@@ -17,6 +17,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
   bool isValeSelected = false;
   String? selectedRAC;
   String? witnessOption;
+  bool isContractorSelected = false; // New state variable for CONTRACTOR
 
   Map<String, String> answers = {};
 
@@ -69,7 +70,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: ElevatedButton(
                   onPressed: () async {
                     // Logic to select Vale
@@ -95,6 +96,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                       setState(() {
                         selectedVale = selectedOption;
                         isValeSelected = true;
+                        isContractorSelected = false; // Reset CONTRACTOR selection
                       });
                     }
                   },
@@ -113,18 +115,19 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                   child: Text(
                     selectedVale,
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      isValeSelected = false;
+                      isValeSelected = true; // Reset VALE selection
                       selectedVale = "CONTRACTOR";
+                      isContractorSelected = true; // Mark CONTRACTOR as selected
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -142,44 +145,86 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                   child: Text(
                     "CONTRACTOR",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ),
               ),
             ],
           ),
+          SizedBox(height: 16),
 
-          if (isValeSelected) ...[
-            SizedBox(height: 16),
-            Text(
-              "Select the critical (RAC) associated with the event:",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
+          // Show the additional question if CONTRACTOR is selected
+          if (isContractorSelected) ...[
+            Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          
+                          Text(
+                            "Did the event involve a SUBCONTRACTOR/ACTIVITY?",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: options.map((option) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () => updateAnswer("Did the event involve a SUBCONTRACTOR/ACTIVITY?",option),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black,
+                                    side: BorderSide(
+                                    color: answers["Did the event involve a SUBCONTRACTOR/ACTIVITY?"] == option ? Colors.blue : Colors.grey[300]!,
+                                      width: 2.0,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 48.0),
+                                  ),
+                                  child: Text(
+                                    option,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        
+          ],
+          if (answers["Did the event involve a SUBCONTRACTOR/ACTIVITY?"] == 'Yes') ...[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                value: selectedRAC,
-                hint: Text("Select RAC"),
-                onChanged: (value) {
-                  setState(() {
-                    selectedRAC = value;
-                  });
-                },
-                items: ["RAC 1", "RAC 2", "RAC 3"].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+              child: Text(
+                "Select the SUBCONTRACTOR responsible for the LOCATION where the event happend",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Add a TextField or another widget to collect the response for the additional question
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter activity details',
+                ),
               ),
             ),
           ],
-
-          SizedBox(height: 16),
 
           // Show "Who first communicated?" only if Vale is selected
           if (isValeSelected)
@@ -194,12 +239,12 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: witness.map((option) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(2.0),
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -308,9 +353,9 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                 ),
                 if (answers["2"] == "Yes") ActionComponent(),
               ],
-            ),
 
-          if (answers["2"] == "Yes"||answers["2"] == "No") 
+            ),
+if (answers["2"] == "Yes"||answers["2"] == "No") 
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -350,7 +395,9 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
               ],
             ),
           ),
+          
         ],
+        
       ),
     );
   }

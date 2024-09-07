@@ -16,28 +16,43 @@ class _BasicInformationState extends State<BasicInformation> {
   PickedFile? _image;
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+     _timeController.text = _selectedTime == null
+        ? ''
+        : _selectedTime!.format(context);
+    _dateController.text = _selectedDate == null ? '' : DateFormat.yMMMd().format(_selectedDate!);
+  }
+
+  void _pickTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      initialTime: _selectedTime ?? TimeOfDay.now(),
     );
-    if (picked != null && picked != _selectedDate) {
+
+    if (pickedTime != null && pickedTime != _selectedTime) {
       setState(() {
-        _selectedDate = picked;
+        _selectedTime = pickedTime;
+        _timeController.text = _selectedTime!.format(context);
       });
     }
   }
-
-  Future<void> _pickTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+  void _pickDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedTime) {
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
-        _selectedTime = picked;
+        _selectedDate = pickedDate;
+        _dateController.text = DateFormat.yMMMd().format(_selectedDate!);
       });
     }
   }
@@ -93,65 +108,68 @@ class _BasicInformationState extends State<BasicInformation> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.logo_dev), // Leading icon
-                  title: Text(
-                    'Basic Information',
-                    style: TextStyle(fontSize: 20, color: Colors.yellow[700], fontWeight: FontWeight.w700),
-                  ), // Text next to the icon
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: ListTile(
+                    leading: Icon(Icons.logo_dev), // Leading icon
+                    title: Text(
+                      'Basic Information',
+                      style: TextStyle(fontSize: 20, color: Colors.yellow[700], fontWeight: FontWeight.w700),
+                    ), // Text next to the icon
+                  ),
                 ),
                 Text(
                   'When did the event occur?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () => _pickDate(context),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: _selectedDate == null
-                          ? 'Select Date'
-                          : DateFormat.yMMMd().format(_selectedDate!),
-                      suffixIcon: Icon(Icons.calendar_today,color: Colors.grey,),
-                    ),
-                  ),
-                ),
+                TextField(
+      controller: _dateController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Select Date',
+        suffixIcon: Icon(Icons.calendar_today, color: Colors.grey[600]),
+      ),
+      readOnly: true, // Prevents user from typing manually
+      onTap: () => _pickDate(context),
+    ),
                 SizedBox(height: 10),
                 Text(
                   'Time',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                GestureDetector(
-                  onTap: () => _pickTime(context),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: _selectedTime == null
-                          ? 'Select Time'
-                          : _selectedTime!.format(context),
-                      suffixIcon: Icon(Icons.access_time,color: Colors.grey),
-                    ),
-                  ),
-                ),
+                TextField(
+        controller: _timeController,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Select Time',
+          suffixIcon: Icon(Icons.access_time, color: Colors.grey[600]),
+        ),
+        readOnly: true, // Prevents user from typing manually
+              onTap: () => _pickTime(context),
+
+      ),
                 SizedBox(height: 10),
                 ListTile(
-                  trailing: Icon(Icons.question_mark_outlined,color: Colors.grey), // Leading icon
+                  trailing: Icon(Icons.help_outline_rounded,color: Colors.grey[600]), // Leading icon
                   title: Text('Describe the event:'), // Text next to the icon
                 ),
-                TextField(
-                  maxLines: 3,
-                  decoration: InputDecoration(),
-                  onChanged: (value) {
-                    setState(() {
-                      _description = value;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    maxLines: 3,
+                    decoration: InputDecoration(),
+                    onChanged: (value) {
+                      setState(() {
+                        _description = value;
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(height: 20),
                 Text(
                   'Add Image (Optional)',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18,),
                 ),
                 SizedBox(height: 10),
                 GestureDetector(
@@ -175,64 +193,83 @@ class _BasicInformationState extends State<BasicInformation> {
                 SizedBox(height: 20),
                 
                 ListTile(
-                  trailing: Icon(Icons.question_mark_outlined,color: Colors.grey), // Leading icon
+                  trailing: Icon(Icons.help_outline_rounded,color: Colors.grey[600]), // Leading icon
                   title: Text(
                   'Select the location where the event happened',
                 ), // Text next to the icon
                 ),
           
                 SizedBox(height: 10),
-                TextField(
-                  maxLines: 3,
-                  decoration: InputDecoration(),
-                  onChanged: (value) {
-                    setState(() {
-                      _description = value;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    maxLines: 3,
+                    decoration: InputDecoration(),
+                    onChanged: (value) {
+                      setState(() {
+                        _description = value;
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(height: 10),
                 ListTile(
-                  trailing: Icon(Icons.question_mark_outlined,color: Colors.grey), // Leading icon
+                  trailing: Icon(Icons.help_outline_rounded,color: Colors.grey[600]), // Leading icon
                   title: Text('Describe the location of the event'), // Text next to the icon
                 ),
-                TextField(
-                  maxLines: 3,
-                  decoration: InputDecoration(),
-                  onChanged: (value) {
-                    setState(() {
-                      _description = value;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    maxLines: 3,
+                    decoration: InputDecoration(),
+                    onChanged: (value) {
+                      setState(() {
+                        _description = value;
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(height: 10),
-                Text(
-                  'Keep going!',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                ListTile(
-            leading: SizedBox(
-              width: 100, // Set width for the progress bar
-              child: LinearProgressIndicator(
-                value: 0.25, // 25% progress
-                backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                minHeight: 8,
-              ),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.arrow_forward, color: Colors.blue),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Text(
+                        'Keep going!',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        
+                        ),
+                        trailing: IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              color: Colors.blue,
               onPressed: () {
                 Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FormPage()),
+                  context,
+                  MaterialPageRoute(builder: (context) => PersonalEvent()),
                 );
               },
             ),
-            title: Text('25% completed', style: TextStyle(fontSize: 16)),
-          ),
-          
+                        subtitle: Text("25 %"),
+                      ),
+                      SizedBox(height: 8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearProgressIndicator(
+                          value: 0.25, // 50% progress
+                          backgroundColor: Colors.grey[600],
+                          color: Colors.green,
+                          minHeight: 8.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
