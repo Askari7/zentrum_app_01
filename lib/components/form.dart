@@ -28,6 +28,11 @@ class _FormPageState extends State<FormPage> {
   },
 ),
      Question(
+       text: 'COULD this event have led to a fatality or a life changed?',
+       options: ['No', 'Yes'],
+       shouldShow: (answers) => answers['Was a Vale employee or contractor injured?'] == 'Yes',
+     ),
+     Question(
        text: 'COULD this event have injured or lead to health impacts to a Vale employee or contractor?',
        options: ['No', 'Yes'],
        shouldShow: (answers) => answers['Was a Vale employee or contractor injured?'] == 'No',
@@ -272,150 +277,146 @@ Question(
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Event Details',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.yellow[700], // Set background color to yellow
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color:Colors.white,
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BasicInformation()),
-              );
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FormPage()),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            color: Colors.white,
-            onPressed: () {
-              // Navigate to Additional Information page
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdditionalInformationPage()),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: ListView(
-          children: [
-            ...questions.where((q) => q.shouldShow(answers)).map((question) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (question.head != null)
-                            Container(
-  width: double.infinity, // Full width
-  decoration: BoxDecoration(
-    color: Colors.grey[300], // Background color
-    borderRadius: BorderRadius.circular(8.0), // Optional: rounded corners
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          question.head!,
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        Icon(
-          Icons.arrow_drop_down,
-          color: Colors.black, // Arrow color
-        ),
-      ],
+  appBar: AppBar(
+    title: const Text(
+      'Event Details',
+      style: TextStyle(color: Colors.white),
     ),
+    backgroundColor: Colors.yellow[700],
+    leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      color: Colors.white,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BasicInformation()),
+        );
+      },
+    ),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.save),
+        color: Colors.white,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FormPage()),
+          );
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.arrow_forward),
+        color: Colors.white,
+        onPressed: () {
+          // Navigate to Additional Information page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AdditionalInformationPage()),
+          );
+        },
+      ),
+    ],
   ),
-),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+  body: Container(
+    decoration: BoxDecoration(color: Colors.white),
+    child: ListView(
+      children: [
+        ...questions.where((q) => q.shouldShow(answers)).map((question) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (question.head != null)
+                  Container(
+                    width: double.infinity, // Full width
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300], // Background color
+                      borderRadius: BorderRadius.circular(8.0), // Optional: rounded corners
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          
                           Text(
-                            question.text,
+                            question.head!,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black, // Arrow color
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: question.options.map((option) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ElevatedButton(
-                            onPressed: () => updateAnswer(question.text, option),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:Colors.white,
-                              foregroundColor: Colors.black,
-                              side: BorderSide(
-            color: answers[question.text] == option ? Colors.blue : Colors.grey[300]!,
-
-                                width: 2.0,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 64.0),
-                            ),
-                            child: Text(
-                              option,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
-                            ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        question.text,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: question.options.map((option) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ElevatedButton(
+                        onPressed: () => updateAnswer(question.text, option),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          side: BorderSide(
+                            color: answers[question.text] == option
+                                ? Colors.blue
+                                : Colors.grey[300]!,
+                            width: 2.0,
                           ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8.0, horizontal: 64.0),
+                        ),
+                        child: Text(
+                          option,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
-              );
-            }).toList(),
+                      // Display custom component if defined
+                      if (question.customComponent != null)
+                        question.customComponent!(answers),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                
+              ],
+            ),
+          );
+        }).toList(),
+      ],
+    ),
+  ),
+);
 
-            // Conditional custom component
-            if (answers['Was a Vale employee or contractor injured?'] == 'Yes')
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: WorkerComponent(),
-              ),
-            if (answers['Was there injury to a community member(not a Vale employee / contractor / subcontractor)?'] == 'Yes')
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: CountComponent(),
-              ),
-          ],
-        ),
-      ),
-    );
   }
   
 }
