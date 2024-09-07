@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zentrum_app_01/components/actionComponent.dart';
+import 'package:zentrum_app_01/components/eventOverview.dart';
 import 'package:zentrum_app_01/components/form.dart';
 
 class ActivityComponent extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ActivityComponentState extends State<ActivityComponent> {
 
       children: [
 
-      Column(
+                  Column(
                         children: [
                           
                           Text(
@@ -73,32 +74,46 @@ class _ActivityComponentState extends State<ActivityComponent> {
                         ),
                         if(answers["2"]=="Yes")
                         ActionComponent(),
-                        Text(
-                  'Keep going!',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                ListTile(
-            leading: SizedBox(
-              width: 100, // Set width for the progress bar
-              child: LinearProgressIndicator(
-                value: 0.25, // 25% progress
-                backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                minHeight: 8,
-              ),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.arrow_forward, color: Colors.blue),
+                        Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Text(
+                        'Keep going!',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        
+                        ),
+                        trailing: IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              color: Colors.blue,
               onPressed: () {
                 Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FormPage()),
+                  context,
+                  MaterialPageRoute(builder: (context) => EventOverview()),
                 );
               },
             ),
-            title: Text('100% completed', style: TextStyle(fontSize: 16)),
-                )
+                        subtitle: Text("100 %"),
+                      ),
+                      SizedBox(height: 8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearProgressIndicator(
+                          value: 1, // 50% progress
+                          backgroundColor: Colors.grey[300],
+                          color: Colors.green,
+                          minHeight: 8.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
     ],
     );
   }

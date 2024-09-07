@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zentrum_app_01/components/ActivityComponent.dart';
+import 'package:zentrum_app_01/components/ActionComponent.dart';
+import 'package:zentrum_app_01/components/eventOverview.dart';
 
 class AdditionalComponentPage extends StatefulWidget {
   @override
@@ -8,11 +9,11 @@ class AdditionalComponentPage extends StatefulWidget {
 }
 
 class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
-  String selectedCompany = "Vale / 1";
+  String selectedCompany = "Other Company";
   bool isControlledActivity = false;
   List<String> options = ['No', 'Yes'];
   List<String> witness = ['Myself', 'Other Person'];
-   String selectedVale = "VALE";
+  String selectedVale = "VALE";
   bool isValeSelected = false;
   String? selectedRAC;
   String? witnessOption;
@@ -56,181 +57,13 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
             }).toList(),
           ),
           SizedBox(height: 16),
+
           // Controlled Activity
-
-
           Text(
             'Select the COMPANY responsible for the TASK/ACTIVITY performed at the time of the event?',
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
-
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: ElevatedButton(
-          //         onPressed: () => {},
-          //         style: ElevatedButton.styleFrom(
-          //           backgroundColor: Colors.white,
-          //           foregroundColor: Colors.black,
-          //           side: BorderSide(
-          //             color: Colors.blue,
-          //             width: 2.0,
-          //           ),
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8.0),
-          //           ),
-          //           padding:
-          //               EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          //         ),
-          //         child: Text(
-          //           "VALE",
-          //           style: TextStyle(
-          //             fontSize: 16.0,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: ElevatedButton(
-          //         onPressed: () => {},
-          //         style: ElevatedButton.styleFrom(
-          //           backgroundColor: Colors.white,
-          //           foregroundColor: Colors.black,
-          //           side: BorderSide(
-          //             color: Colors.blue,
-          //             width: 2.0,
-          //           ),
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8.0),
-          //           ),
-          //           padding:
-          //               EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          //         ),
-          //         child: Text(
-          //           "CONTRACTOR",
-          //           style: TextStyle(
-          //             fontSize: 16.0,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // SizedBox(height: 16),
-          // // Controlled Activity Question
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Text(
-          //       "Did the event happen during a controlled ACTIVITY?",
-          //       style: TextStyle(
-          //         fontSize: 16.0,
-          //         color: Colors.black,
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: options.map((option) {
-          //       return Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: ElevatedButton(
-          //           onPressed: () => updateAnswer("1", option),
-          //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: Colors.white,
-          //             foregroundColor: Colors.black,
-          //             side: BorderSide(
-          //               color: Colors.grey,
-          //               width: 2.0,
-          //             ),
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(8.0),
-          //             ),
-          //             padding:
-          //                 EdgeInsets.symmetric(vertical: 8.0, horizontal: 48.0),
-          //           ),
-          //           child: Text(
-          //             option,
-          //             style: TextStyle(
-          //               fontSize: 16.0,
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     }).toList(),
-          //   ),
-          // ),
-          // // Witness Question
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Text(
-          //       "Who first communicated/witnessed the event? (optional)",
-          //       style: TextStyle(
-          //         fontSize: 16.0,
-          //         color: Colors.black,
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: witness.map((option) {
-          //       return Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: ElevatedButton(
-          //           onPressed: () => updateAnswer("2", option),
-          //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: Colors.white,
-          //             foregroundColor: Colors.black,
-          //             side: BorderSide(
-          //               color: Colors.blue,
-          //               width: 2.0,
-          //             ),
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(8.0),
-          //             ),
-          //             padding:
-          //                 EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-          //           ),
-          //           child: Text(
-          //             option,
-          //             style: TextStyle(
-          //               fontSize: 16.0,
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     }).toList(),
-          //   ),
-          // ),
-          // Divider(),
-          // Row(
-          //   children: [
-          //     Container(
-          //       child: Text(
-          //         'info@alphatic.net / Ali Salar Syed /',
-          //         style: TextStyle(fontSize: 14),
-          //       ),
-          //     ),
-          //     IconButton(
-          //       icon: Icon(Icons.cancel),
-          //       onPressed: () {
-          //         // Logic to remove or clear the information
-          //       },
-          //     ),
-          //   ],
-          // ),
-          // Divider(),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -275,8 +108,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                   ),
                   child: Text(
                     selectedVale,
@@ -289,7 +121,12 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () {
+                    setState(() {
+                      isValeSelected = false;
+                      selectedVale = "CONTRACTOR";
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
@@ -300,8 +137,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                   ),
                   child: Text(
                     "CONTRACTOR",
@@ -313,6 +149,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
               ),
             ],
           ),
+
           if (isValeSelected) ...[
             SizedBox(height: 16),
             Text(
@@ -341,61 +178,69 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
               ),
             ),
           ],
+
           SizedBox(height: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Who first communicated/witnessed the event? (optional)",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: ["Myself", "Other Person"].map((option) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        witnessOption = option;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                      side: BorderSide(
-                        color: Colors.blue,
-                        width: 2.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                    ),
-                    child: Text(
-                      option,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
+
+          // Show "Who first communicated?" only if Vale is selected
+          if (isValeSelected)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Who first communicated/witnessed the event? (optional)",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
                   ),
-                );
-              }).toList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: witness.map((option) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              witnessOption = option;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            side: BorderSide(
+                              color: witnessOption == option
+                                  ? Colors.blue
+                                  : Colors.grey[300]!,
+                              width: 2.0,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 32.0),
+                          ),
+                          child: Text(
+                            option,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
-          ),
+
+          // If witness option is "Myself", show the specific info and cancel button
           if (witnessOption == "Myself") ...[
             Divider(),
             Row(
               children: [
-                Container(
+                Expanded(
                   child: Text(
                     'info@alphatic.net / Ali Salar Syed /',
                     style: TextStyle(fontSize: 14),
@@ -404,18 +249,109 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
                 IconButton(
                   icon: Icon(Icons.cancel),
                   onPressed: () {
-                    // Logic to remove or clear the information
+                    setState(() {
+                      witnessOption = null; // Reset the witness option
+                    });
                   },
                 ),
               ],
             ),
             Divider(),
           ],
-        ActivityComponent()
-        ]
-      
-      )
-    
+
+          // Immediate action question, only if "Myself" is selected
+          if (witnessOption == "Myself")
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Were immediate actions taken to mitigate further impacts of the event?",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: options.map((option) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: () => updateAnswer("2", option),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            side: BorderSide(
+                              color: answers["2"] == option
+                                  ? Colors.blue
+                                  : Colors.grey[300]!,
+                              width: 2.0,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 48.0),
+                          ),
+                          child: Text(
+                            option,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                if (answers["2"] == "Yes") ActionComponent(),
+              ],
+            ),
+
+          if (answers["2"] == "Yes"||answers["2"] == "No") 
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  title: Text(
+                    'Keep going!',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    color: Colors.blue,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EventOverview()),
+                      );
+                    },
+                  ),
+                  subtitle: Text("100 %"),
+                ),
+                SizedBox(height: 8.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: LinearProgressIndicator(
+                    value: 1, // 100% progress
+                    backgroundColor: Colors.grey[300],
+                    color: Colors.green,
+                    minHeight: 8.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

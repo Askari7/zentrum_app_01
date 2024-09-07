@@ -9,6 +9,7 @@ class WorkerComponent extends StatefulWidget {
 }
 
 class _WorkerComponentState extends State<WorkerComponent> {
+    
   List<bool> _expandedState = []; // Ensure this is an empty growable list
 
   void _addWorker() {

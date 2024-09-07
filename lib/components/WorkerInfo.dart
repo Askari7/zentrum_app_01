@@ -8,8 +8,11 @@ class WorkerInfo extends StatefulWidget {
 }
 
 class _WorkerInfoState extends State<WorkerInfo> {
+  String finalQuestion = 'COULD this event have led to a fatality or a life changed?';
+
   int _selectedValue = 1; // Initialize the selected value with a default option
   bool _showAdditionalQuestion = false; // Track whether to show the additional question
+  bool _showFinalQuestion = false; // Track whether to show the final question
   List<String> _selectedConsequences = []; // Track selected consequences
   List<String> options = ['No', 'Yes'];
   String question = 'Did the injury require care beyond first aid?';
@@ -26,6 +29,11 @@ class _WorkerInfoState extends State<WorkerInfo> {
           _showAdditionalQuestion = false;
           _selectedConsequences.clear(); // Clear consequences if "No" is selected
         }
+      }
+
+      // Show final question if the answer is Yes for the first question
+      if (question == this.question) {
+        _showFinalQuestion = (answer == 'Yes');
       }
     });
   }
@@ -51,7 +59,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                     title: Text('Work-related'),
                     value: 1,
                     groupValue: _selectedValue,
-                    fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                    fillColor: MaterialStateProperty.all(Colors.grey[300]),
                     onChanged: (value) {
                       setState(() {
                         _selectedValue = value!;
@@ -63,7 +71,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                     title: Text('Commuting'),
                     value: 2,
                     groupValue: _selectedValue,
-                    fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                    fillColor: MaterialStateProperty.all(Colors.grey[300]),
                     onChanged: (value) {
                       setState(() {
                         _selectedValue = value!;
@@ -75,7 +83,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                     title: Text('Non-work-related'),
                     value: 3,
                     groupValue: _selectedValue,
-                    fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                    fillColor: MaterialStateProperty.all(Colors.grey[300]),
                     onChanged: (value) {
                       setState(() {
                         _selectedValue = value!;
@@ -120,7 +128,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 }).toList(),
               ),
 
-              if (answers[question]=="Yes") ...[
+              if (answers[question] == "Yes") ...[
                 SizedBox(height: 20),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
@@ -130,7 +138,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 CheckboxListTile(
                   title: Text('Medical Treatment'),
                   value: _selectedConsequences.contains('Medical Treatment'),
-                  fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                  fillColor: MaterialStateProperty.all(Colors.grey[300]),
                   onChanged: (value) {
                     setState(() {
                       if (value == true) {
@@ -144,7 +152,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 CheckboxListTile(
                   title: Text('Restriction'),
                   value: _selectedConsequences.contains('Restriction'),
-                  fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                  fillColor: MaterialStateProperty.all(Colors.grey[300]),
                   onChanged: (value) {
                     setState(() {
                       if (value == true) {
@@ -158,7 +166,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 CheckboxListTile(
                   title: Text('Lost Time'),
                   value: _selectedConsequences.contains('Lost Time'),
-                  fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                  fillColor: MaterialStateProperty.all(Colors.grey[300]),
                   onChanged: (value) {
                     setState(() {
                       if (value == true) {
@@ -172,7 +180,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 CheckboxListTile(
                   title: Text('Fatality'),
                   value: _selectedConsequences.contains('Fatality'),
-                  fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                  fillColor: MaterialStateProperty.all(Colors.grey[300]),
                   onChanged: (value) {
                     setState(() {
                       if (value == true) {
@@ -186,7 +194,7 @@ class _WorkerInfoState extends State<WorkerInfo> {
                 CheckboxListTile(
                   title: Text('Unknown'),
                   value: _selectedConsequences.contains('Unknown'),
-                  fillColor: MaterialStateProperty.all(Colors.grey[300]), // Apply blue fill color
+                  fillColor: MaterialStateProperty.all(Colors.grey[300]),
                   onChanged: (value) {
                     setState(() {
                       if (value == true) {
@@ -196,6 +204,45 @@ class _WorkerInfoState extends State<WorkerInfo> {
                       }
                     });
                   },
+                ),
+              ],
+
+              // Conditionally render the final question
+              if (_showFinalQuestion) ...[
+                SizedBox(height: 20),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  trailing: Icon(Icons.help_outline, color: Colors.blue),
+                  title: Text(finalQuestion),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: options.map((option) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ElevatedButton(
+                        onPressed: () => updateAnswer(finalQuestion, option),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          side: BorderSide(
+                            color: answers[finalQuestion] == option ? Colors.blue : Colors.grey[300]!,
+                            width: 2.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                        ),
+                        child: Text(
+                          option,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ],
             ],

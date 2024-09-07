@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zentrum_app_01/components/WorkerComponent.dart';
-import 'package:zentrum_app_01/components/actionComponent.dart';
+import 'package:zentrum_app_01/components/CommunityEvent.dart';
 import 'package:zentrum_app_01/components/additionalComponent1.dart';
 import 'package:zentrum_app_01/components/additionalComponent2.dart';
 import 'package:zentrum_app_01/components/eventOverview.dart';
@@ -25,6 +24,7 @@ class _AdditionalInformationPageState extends State<AdditionalInformationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Additional Details',style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.yellow[700], // Set background color to yellow
@@ -34,7 +34,7 @@ class _AdditionalInformationPageState extends State<AdditionalInformationPage> {
           onPressed: () {
 Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FormPage()),
+                MaterialPageRoute(builder: (context) => CommunityEvent()),
               );          },
         ),
         actions: [
@@ -62,7 +62,11 @@ Navigator.push(
         ],
       ),
       body: SingleChildScrollView(
+        
         child: Container(
+          // height: MediaQuery.of(context).size.height,
+          // width: MediaQuery.of(context).size.width,
+
                   decoration: BoxDecoration(color: Colors.white),
         
           child: Padding(

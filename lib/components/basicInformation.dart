@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
 import 'package:image_picker/image_picker.dart';
+import 'package:zentrum_app_01/components/PersonalEvent.dart';
 import 'package:zentrum_app_01/components/form.dart'; // For picking images
 
 class BasicInformation extends StatefulWidget {
@@ -76,7 +77,7 @@ class _BasicInformationState extends State<BasicInformation> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FormPage()),
+                MaterialPageRoute(builder: (context) => PersonalEvent()),
               );
             },
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zentrum_app_01/components/WorkerInfo.dart';
 import 'package:zentrum_app_01/components/actionInfo.dart';
 
 class ActionComponent extends StatefulWidget {
@@ -92,7 +91,6 @@ void _toggleCollapse() {
             
             Column(
               children: List.generate(_expandedState.length, (index) {
-                var _selectedValue;
                 return Card(
                   color: Colors.white,
                   child: Column(
