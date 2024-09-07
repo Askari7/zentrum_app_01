@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zentrum_app_01/components/additionalComponent.dart';
-import 'package:zentrum_app_01/components/additionalInformation.dart';
 import 'package:zentrum_app_01/components/basicInformation.dart';
 
 void main() {

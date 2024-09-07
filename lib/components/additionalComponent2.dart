@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:zentrum_app_01/components/ActivityComponent.dart';
 
-class AdditionalComponentPage extends StatefulWidget {
+class AdditionalComponentPage2 extends StatefulWidget {
   @override
   _AdditionalComponentPageState createState() =>
       _AdditionalComponentPageState();
 }
 
-class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
+class _AdditionalComponentPageState extends State<AdditionalComponentPage2> {
   String selectedCompany = "Vale / 1";
   bool isControlledActivity = false;
   List<String> options = ['No', 'Yes'];
@@ -35,7 +36,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
         children: [
           // Supervisor/Manager Selection
           Text(
-            'Select the area (supervisor or manager) responsible for the TASK/ACTIVITY performed at the time of the event',
+            'Select the area (supervisor or manager) responsible for the LOCATION where the event happened',
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
@@ -59,7 +60,7 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
 
 
           Text(
-            'Select the COMPANY responsible for the TASK/ACTIVITY performed at the time of the event?',
+            'Select the COMPANY responsible for the LOCATION where the event happened',
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
@@ -410,6 +411,8 @@ class _AdditionalComponentPageState extends State<AdditionalComponentPage> {
             ),
             Divider(),
           ],
+          ActivityComponent()
+
         ]
       )
     );

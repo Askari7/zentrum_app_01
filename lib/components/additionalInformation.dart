@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zentrum_app_01/components/additionalComponent.dart';
+import 'package:zentrum_app_01/components/WorkerComponent.dart';
+import 'package:zentrum_app_01/components/actionComponent.dart';
+import 'package:zentrum_app_01/components/additionalComponent1.dart';
+import 'package:zentrum_app_01/components/additionalComponent2.dart';
 import 'package:zentrum_app_01/components/eventOverview.dart';
 import 'package:zentrum_app_01/components/form.dart';
 
@@ -139,79 +142,11 @@ Navigator.push(
                             }).toList(),
                           ),
                         ),
+                if(answers["1"]=="Yes")
                 AdditionalComponentPage(),
-          
-                Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          
-                          Text(
-                            "Were immediate actions taken to mitigate further impacts of the event?",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: options.map((option) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () => updateAnswer("1",option),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: option == 'NO' ? Colors.white : Colors.grey[300],
-                                    foregroundColor: Colors.black,
-                                    side: BorderSide(
-                                      color: Colors.blue,
-                                      width: 2.0,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 48.0),
-                                  ),
-                                  child: Text(
-                                    option,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Text(
-                  'Keep going!',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                ListTile(
-            leading: SizedBox(
-              width: 100, // Set width for the progress bar
-              child: LinearProgressIndicator(
-                value: 0.25, // 25% progress
-                backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                minHeight: 8,
-              ),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.arrow_forward, color: Colors.blue),
-              onPressed: () {
-                Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FormPage()),
-                );
-              },
-            ),
-            title: Text('100% completed', style: TextStyle(fontSize: 16)),
-          ),
+                if(answers["1"]=="No")
+                AdditionalComponentPage2(),
+        
               ],
             ),
           ),
