@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zentrum_app_01/components/Comp.dart';
 import 'package:zentrum_app_01/components/additionalInformation.dart';
 import 'package:zentrum_app_01/components/basicInformation.dart';
 import 'package:zentrum_app_01/components/countComponent.dart';
@@ -16,11 +17,11 @@ class _FormPageState extends State<FormPage> {
   List<Question> questions = [
     Question(
       head: "Personal Event",
-      text: 'Was a company employee or contractor injured?',
+      text: 'Was a Vale employee or contractor injured?',
       options: ['No', 'Yes'],
       shouldShow: (_) => true,
       customComponent: (answers) {
-        if (answers['Was a company employee or contractor injured?'] == 'Yes') {
+        if (answers['Was a Vale employee or contractor injured?'] == 'Yes') {
           return WorkerComponent(); // Replace with your custom component
         }
         return SizedBox.shrink(); // Returns an empty widget if not rendered
@@ -28,11 +29,12 @@ class _FormPageState extends State<FormPage> {
     ),
     Question(
       text:
-          'COULD this event have injured or lead to health impacts to a company employee or contractor?',
+          'COULD this event have injured or lead to health impacts to a Vale employee or contractor?',
       options: ['No', 'Yes'],
       shouldShow: (answers) =>
-          answers['Was a company employee or contractor injured?'] == 'No',
+          answers['Was a Vale employee or contractor injured?'] == 'No',
     ),
+
     Question(
       text: 'Is this event only a positive recognition of a behaviour?',
       options: ['No', 'Yes'],
@@ -42,26 +44,33 @@ class _FormPageState extends State<FormPage> {
           'No',
     ),
     Question(
-      text: 'COULD this event have led to a fatality or a life changed?',
+      text: 'Is this event only a positive recognition of a behaviour?',
       options: ['No', 'Yes'],
       shouldShow: (answers) =>
           answers[
-              'COULD this event have injured or lead to health impacts to a company employee or contractor?'] ==
+              'Is this event only a positive recognition of a behaviour?'] ==
           'Yes',
+      customComponent: (answers) {
+        if (answers['Was a Vale employee or contractor injured?'] == 'No' ||
+            answers["COULD this event have injured or lead to health impacts to a Vale employee or contractor?"] ==
+                'No') {
+          return Comp(); // Replace with your custom component
+        }
+        return SizedBox.shrink(); // Returns an empty widget if not rendered
+      },
     ),
+
     Question(
       head: "Environmental Event",
       text:
           'Did the event impact the environment(soil, surface water, air, biodiversity)?',
       options: ['No', 'Yes'],
       shouldShow: (answers) =>
-          answers['COULD this event have led to a fatality or a life changed?'] ==
-              'Yes' ||
-          answers['COULD this event have led to a fatality or a life changed?'] ==
-              'No' ||
-          answers['Is this event only a positive recognition of a behaviour?'] ==
-              'No',
+          answers[
+              'Is this event only a positive recognition of a behaviour?'] ==
+          'No',
     ),
+
     Question(
       text:
           'Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?',
@@ -71,6 +80,44 @@ class _FormPageState extends State<FormPage> {
               'Did the event impact the environment(soil, surface water, air, biodiversity)?'] ==
           'No',
     ),
+
+    Question(
+        head: "Material Event",
+        text: 'Was there material damage?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?'] ==
+            'No'),
+
+    Question(
+      text: 'COULD this event have led to a fatality or a life changed?',
+      options: ['No', 'Yes'],
+      shouldShow: (answers) =>
+          answers[
+              'COULD this event have injured or lead to health impacts to a Vale employee or contractor?'] ==
+          'Yes',
+    ),
+
+    Question(
+        head: "Environmental Event",
+        text:
+            'Did the event impact the environment(soil, surface water, air, biodiversity)?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'COULD this event have led to a fatality or a life changed?'] ==
+            'Yes'),
+    Question(
+        head: "Environmental Event",
+        text:
+            'Did the event impact the environment(soil, surface water, air, biodiversity)?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'COULD this event have led to a fatality or a life changed?'] ==
+            'No'),
+
     Question(
       text:
           'Was the environmental impact controlled using ONLY immediate actions and internal resources?',
@@ -80,34 +127,26 @@ class _FormPageState extends State<FormPage> {
               'Did the event impact the environment(soil, surface water, air, biodiversity)?'] ==
           'Yes',
     ),
-    Question(
-      text:
-          'Did the event have an environmental impact beyound the immediate vicinity of the event?',
-      options: ['No', 'Yes'],
-      shouldShow: (answers) =>
-          answers[
-              'Was the environmental impact controlled using ONLY immediate actions and internal resources?'] ==
-          'No',
-    ),
-    Question(
-      text:
-          'COULD the environmental impact affect beyound the immediate vicinity of the event?',
-      options: ['No', 'Yes'],
-      shouldShow: (answers) =>
-          answers[
-              'Did the event have an environmental impact beyound the immediate vicinity of the event?'] ==
-          'No',
-    ),
-    Question(
-        head: "Material Event",
-        text: 'Was there material damage?',
-        options: ['No', 'Yes'],
-        shouldShow: (answers) =>
-            answers['COULD the environmental impact affect beyound the immediate vicinity of the event?'] == 'No' ||
-            answers['Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?'] ==
-                'No' ||
-            answers['COULD the environmental impact affect areas protected by law'] ==
-                'No'),
+
+    // Question(
+    //    text: 'Did the event have an environmental impact beyound the immediate vicinity of the event?',
+    //    options: ['No', 'Yes'],
+    //    shouldShow: (answers) => answers['Was the environmental impact controlled using ONLY immediate actions and internal resources?'] == 'No',
+    //  ),
+
+    // Question(
+    //    text: 'COULD the environmental impact affect beyound the immediate vicinity of the event?',
+    //    options: ['No', 'Yes'],
+    //    shouldShow: (answers) => answers['Did the event have an environmental impact beyound the immediate vicinity of the event?'] == 'No',
+    //  ),
+
+    //      Question(
+    //   head: "Material Event",
+    //    text: 'Was there material damage?',
+    //    options: ['No', 'Yes'],
+    //    shouldShow: (answers) => answers['COULD the environmental impact affect beyound the immediate vicinity of the event?'] == 'No'
+    //  ),
+
     Question(
       text:
           'Is there POTENTIAL for the environmental impact to require actions BEYOUND those immediately implemented or require external support?',
@@ -117,15 +156,13 @@ class _FormPageState extends State<FormPage> {
               'Was the environmental impact controlled using ONLY immediate actions and internal resources?'] ==
           'Yes',
     ),
-    Question(
-      text:
-          'Is there POTENTIAL for the environmental impact to require actions BEYOUND those immediately implemented or require external support?',
-      options: ['No', 'Yes'],
-      shouldShow: (answers) =>
-          answers[
-              'Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?'] ==
-          'Yes',
-    ),
+
+    // Question(
+    //    text: 'Is there POTENTIAL for the environmental impact to require actions BEYOUND those immediately implemented or require external support?',
+    //    options: ['No', 'Yes'],
+    //    shouldShow: (answers) => answers['Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?'] == 'Yes',
+    //  ),
+
     Question(
       text:
           'COULD the environmental impact affect beyound the immediate vicinity of the event?',
@@ -133,7 +170,7 @@ class _FormPageState extends State<FormPage> {
       shouldShow: (answers) =>
           answers[
               'Is there POTENTIAL for the environmental impact to require actions BEYOUND those immediately implemented or require external support?'] ==
-          'No',
+          'Yes',
     ),
     Question(
       text: 'COULD the environmental impact affect areas protected by law',
@@ -141,19 +178,47 @@ class _FormPageState extends State<FormPage> {
       shouldShow: (answers) =>
           answers[
               'COULD the environmental impact affect beyound the immediate vicinity of the event?'] ==
-          'No',
+          'Yes',
     ),
+
     Question(
-      text:
-          'Operational equipment or assets were directly involved in the event?',
-      options: ['No', 'Yes'],
-      shouldShow: (answers) => answers['Was there material damage?'] == 'No',
-    ),
+        head: "Material Event",
+        text: 'Was there material damage?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'COULD the environmental impact affect beyound the immediate vicinity of the event?'] ==
+            'No'),
+
+    Question(
+        head: "Material Event",
+        text: 'Was there material damage?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'Did the event have an environmental impact beyound the immediate vicinity of the event?'] ==
+            'Yes'),
+    Question(
+        head: "Material Event",
+        text: 'Was there material damage?',
+        options: ['No', 'Yes'],
+        shouldShow: (answers) =>
+            answers[
+                'COULD the environmental impact affect areas protected by law'] ==
+            'Yes'),
+
     Question(
       text:
           'Operational equipment or assets were directly involved in the event?',
       options: ['No', 'Yes'],
       shouldShow: (answers) => answers['Was there material damage?'] == 'Yes',
+    ),
+
+    Question(
+      text:
+          'Operational equipment or assets were directly involved in the event?',
+      options: ['No', 'Yes'],
+      shouldShow: (answers) => answers['Was there material damage?'] == 'No',
     ),
     Question(
       text:
@@ -188,28 +253,7 @@ class _FormPageState extends State<FormPage> {
           answers['Is this Operational Process Safety Event (P Event)?'] ==
           'Yes',
     ),
-    Question(
-      head: "Community Event",
-      text:
-          'Was there injury to a community member(not a company employee / contractor / subcontractor)?',
-      options: ['No', 'Yes'],
-      shouldShow: (answers) =>
-          answers['Is this event an operational occurence?'] == 'Yes' ||
-          answers['Is this event an operational occurence?'] == 'No' ||
-          answers['Are you a CPIA coordinator or a member of the CPIA registration group?(Attention: if you are not answer NO)'] ==
-              'No',
-      customComponent: (answers) {
-        if ((answers[
-                    'Was there injury to a community member(not a company employee / contractor / subcontractor)?'] ==
-                'Yes') ||
-            (answers[
-                    'Was there injury to a community member(not a company employee / contractor / subcontractor)?'] ==
-                'No')) {
-          return CountComponent(); // Replace with your custom component
-        }
-        return SizedBox.shrink(); // Returns an empty widget if not rendered
-      },
-    ),
+
     Question(
       text: 'Is this event an operational occurence?',
       options: ['No', 'Yes'],
@@ -219,12 +263,46 @@ class _FormPageState extends State<FormPage> {
           'Yes',
     ),
     Question(
+      head: "Community Event",
+      text:
+          'Was there injury to a community member(not a Vale employee / contractor / subcontractor)?',
+      options: ['No', 'Yes'],
+      shouldShow: (answers) =>
+          answers['Is this event an operational occurence?'] == 'No' ||
+          answers['Are you a CPIA coordinator or a member of the CPIA registration group?(Attention: if you are not answer NO)'] ==
+              'No',
+      customComponent: (answers) {
+        if ((answers[
+                'Was there injury to a community member(not a Vale employee / contractor / subcontractor)?'] ==
+            'Yes')) {
+          return CountComponent(); // Replace with your custom component
+        }
+        return SizedBox.shrink(); // Returns an empty widget if not rendered
+      },
+    ),
+    Question(
+      head: "Community Event",
+      text:
+          'Was there injury to a community member(not a Vale employee / contractor / subcontractor)?',
+      options: ['No', 'Yes'],
+      shouldShow: (answers) =>
+          answers['Is this event an operational occurence?'] == 'Yes',
+      customComponent: (answers) {
+        if ((answers[
+                'Was there injury to a community member(not a Vale employee / contractor / subcontractor)?'] ==
+            'Yes')) {
+          return CountComponent(); // Replace with your custom component
+        }
+        return SizedBox.shrink(); // Returns an empty widget if not rendered
+      },
+    ),
+    Question(
       text: 'COULD this event have led to a fatality of a community member?',
       options: ['No', 'Yes'],
       shouldShow: (answers) =>
-          answers['Was there injury to a community member(not a company employee / contractor / subcontractor)?'] ==
+          answers['Was there injury to a community member(not a Vale employee / contractor / subcontractor)?'] ==
               'No' ||
-          answers['Was there injury to a community member(not a company employee / contractor / subcontractor)?'] ==
+          answers['Was there injury to a community member(not a Vale employee / contractor / subcontractor)?'] ==
               'Yes',
     ),
   ];
@@ -232,6 +310,7 @@ class _FormPageState extends State<FormPage> {
   Map<String, String> answers = {};
 
   void updateAnswer(String question, String answer) {
+    print("$answers answers");
     setState(() {
       answers[question] = answer;
     });

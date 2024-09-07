@@ -117,10 +117,10 @@ Navigator.push(
                                 child: ElevatedButton(
                                   onPressed: () => updateAnswer("1",option),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: option == 'NO' ? Colors.white : Colors.grey[300],
+                                    backgroundColor: Colors.white,
                                     foregroundColor: Colors.black,
                                     side: BorderSide(
-                                      color: Colors.blue,
+                                    color: answers["1"] == option ? Colors.blue : Colors.grey[300]!,
                                       width: 2.0,
                                     ),
                                     shape: RoundedRectangleBorder(
