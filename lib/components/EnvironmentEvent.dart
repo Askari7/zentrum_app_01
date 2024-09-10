@@ -118,7 +118,6 @@ class _EnvironmentEventState extends State<EnvironmentEvent> {
 checkAndNavigateToEnvironmentEvent();
   }
   void checkAndNavigateToEnvironmentEvent() {
-  print(answers);
 
   // Check the answer to a particular question
   if ((answers.containsKey('Does this event have POTENTIAL to impact the environment(soil, surface water, air, biodiversity)?') &&

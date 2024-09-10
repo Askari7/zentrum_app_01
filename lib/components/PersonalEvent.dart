@@ -61,11 +61,14 @@ void checkAndNavigateToEnvironmentEvent() {
   print(answers);
 
   // Check the answer to a particular question
-  if ((answers.containsKey('Is this event only a positive recognition of a behaviour?') &&
+  if (
+    // (answers.containsKey('Was a Vale employee or contractor injured?') &&
+    //   answers['Was a Vale employee or contractor injured?']=="No")||
+    (answers.containsKey('Is this event only a positive recognition of a behaviour?') &&
       answers['Is this event only a positive recognition of a behaviour?']=="No")||
       (answers.containsKey('COULD this event have led to a fatality or a life changed?') &&
       answers['COULD this event have led to a fatality or a life changed?']=="No"||
-      answers['COULD this event have led to a fatality or a life changed?']=="No")
+      answers['COULD this event have led to a fatality or a life changed?']=="Yes")
 
       ) {
     Future.delayed(Duration(seconds: 3), () {

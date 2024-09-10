@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zentrum_app_01/components/MAterialEvent.dart';
+import 'package:zentrum_app_01/components/NoLossesScreen.dart';
 import 'package:zentrum_app_01/components/additionalInformation.dart';
 import 'package:zentrum_app_01/components/countComponent.dart';
 import 'package:zentrum_app_01/models/Question.dart';
@@ -39,15 +40,36 @@ class _CommunityEventState extends State<CommunityEvent> {
               'Yes',
     ),
   ];
-
-  Map<String, String> answers = {};
+    Map<String, String> answers = {};
 
   void updateAnswer(String question, String answer) {
     print("$answers answers");
     setState(() {
       answers[question] = answer;
     });
+    checkAndNavigateToEnvironmentEvent();
   }
+
+  void checkAndNavigateToEnvironmentEvent() {
+
+  // Check the answer to a particular question
+  if ((answers.containsKey('Was there injury to a community member(not a Vale employee / contractor / subcontractor)?') &&
+      answers['Was there injury to a community member(not a Vale employee / contractor / subcontractor)?']=="No")&&
+      (answers.containsKey('COULD this event have led to a fatality of a community member?') &&
+      answers['COULD this event have led to a fatality of a community member?']=="No")
+    ) {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NoLossesScreen()),
+      );
+    });
+  }
+}
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:zentrum_app_01/components/PersonalEvent.dart';
 import 'package:zentrum_app_01/components/additionalInformation.dart';
 import 'package:zentrum_app_01/components/form.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/ErgonomicFatigue.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/PPEClothing.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/PersonalConduct.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/ProceduresAndInstructions.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/ToolsMachineryEquipment.dart';
+import 'package:zentrum_app_01/components/safeareaComponents/TrainingFit.dart';
 
 class Safebehaviour extends StatefulWidget {
   const Safebehaviour({super.key});
@@ -11,49 +17,56 @@ class Safebehaviour extends StatefulWidget {
 }
 
 class _SafebehaviourState extends State<Safebehaviour> {
+  List<bool> isChecked=[];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize all checkboxes as unchecked
+    isChecked = List<bool>.filled(6, false);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-    title: const Text(
-      'Classify the event',
-      style: TextStyle(color: Colors.white),
-    ),
-    backgroundColor: Colors.yellow[700],
-    leading: IconButton(
-      icon: const Icon(Icons.arrow_back),
-      color: Colors.white,
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PersonalEvent()),
-        );
-      },
-    ),
-    actions: [
-      IconButton(
-        icon: const Icon(Icons.save),
-        color: Colors.white,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FormPage()),
-          );
-        },
+        title: const Text(
+          'Classify the event',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.yellow[700],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PersonalEvent()),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.save),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FormPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdditionalInformationPage()),
+              );
+            },
+          ),
+        ],
       ),
-      IconButton(
-        icon: const Icon(Icons.arrow_forward),
-        color: Colors.white,
-        onPressed: () {
-          // Navigate to Additional Information page
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AdditionalInformationPage()),
-          );
-        },
-      ),
-    ],
-  ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(color: Colors.white),
@@ -117,12 +130,54 @@ class _SafebehaviourState extends State<Safebehaviour> {
                 SizedBox(height: 16),
                 Column(
                   children: [
-                    _buildCheckItem("Procedures and Instructions"),
-                    _buildCheckItem("Personal Conduct"),
-                    _buildCheckItem("Training/Fit for Work"),
-                    _buildCheckItem("Ergonomic/Fatigue"),
-                    _buildCheckItem("PPE/Clothing"),
-                    _buildCheckItem("Tools, Machinery, Equipment"),
+                    _buildCheckItem(
+                      0,
+                      "Procedures and Instructions",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProcedureInstructionsPage()),
+                      ),
+                    ),
+                    _buildCheckItem(
+                      1,
+                      "Personal Conduct",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PersonalConduct()),
+                      ),
+                    ),
+                    _buildCheckItem(
+                      2,
+                      "Training/Fit for Work",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TrainingFit()),
+                      ),
+                    ),
+                    _buildCheckItem(
+                      3,
+                      "Ergonomic/Fatigue",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ErgonomicFatigue()),
+                      ),
+                    ),
+                    _buildCheckItem(
+                      4,
+                      "PPE/Clothing",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PPEClothing()),
+                      ),
+                    ),
+                    _buildCheckItem(
+                      5,
+                      "Tools, Machinery, Equipment",
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ToolsMachineryEquipment()),
+                      ),
+                    ),
                   ],
                 ),
                 Padding(
@@ -145,9 +200,7 @@ class _SafebehaviourState extends State<Safebehaviour> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AdditionalInformationPage()),
+                              MaterialPageRoute(builder: (context) => AdditionalInformationPage()),
                             );
                           },
                         ),
@@ -174,14 +227,23 @@ class _SafebehaviourState extends State<Safebehaviour> {
     );
   }
 
-  Widget _buildCheckItem(String title) {
-    return CheckboxListTile(
+  Widget _buildCheckItem(int index, String title, Function onTap) {
+    return ListTile(
+      leading: Checkbox(
+        value: isChecked[index],
+        onChanged: (bool? newValue) {
+          setState(() {
+            isChecked[index] = newValue!; // Update the checkbox state
+          });
+        },
+      ),
       title: Text(title),
-      value: false,
-      onChanged: (bool? newValue) {
-        // Handle checkbox state change
-      },
-      secondary: Icon(Icons.arrow_forward),
+      trailing: IconButton(
+        icon: Icon(Icons.arrow_forward),
+        onPressed: () {
+          onTap(); // Execute the passed function
+        },
+      ),
     );
   }
 }
